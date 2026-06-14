@@ -52,6 +52,7 @@ let
         dropbear
         dtach
         ethtool
+        file
         socat
         tcpdump
       ];
