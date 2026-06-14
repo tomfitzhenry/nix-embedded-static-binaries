@@ -1,0 +1,15 @@
+name: Evaluate
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+      - run: nix-instantiate default.nix -A tarballs
+      - run: nix-instantiate default.nix -A checks
