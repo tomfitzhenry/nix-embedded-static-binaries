@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@main
-      - uses: Mic92/hestia/action@main
+      - uses: Mic92/hestia@v1
       - run: nix-build default.nix -A checks --no-out-link
       - run: nix-build default.nix -A tarballs -o tarballs
       - name: Create release
