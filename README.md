@@ -15,7 +15,7 @@ reusing nixpkgs' existing build infra.
 
 ## Tools
 
-busybox, curl, dropbear, dtach, ethtool, socat, tcpdump
+busybox, curl, dropbear, dtach, ethtool, socat, tcpdump, wormhole-william
 
 I've added packages as I've needed them, but feel to add any ~small
 binaries. To find package names, search

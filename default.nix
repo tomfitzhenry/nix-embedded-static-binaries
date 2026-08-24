@@ -55,6 +55,7 @@ let
         file
         socat
         tcpdump
+        wormhole-william
       ];
     };
 
