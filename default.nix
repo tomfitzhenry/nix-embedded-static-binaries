@@ -8,7 +8,7 @@ let
     mips-sf = {
       config = "mips-unknown-linux-musl";
       gcc = {
-        arch = "mips32r2";
+        arch = "mips32";
         abi = "32";
         float = "soft";
       };
