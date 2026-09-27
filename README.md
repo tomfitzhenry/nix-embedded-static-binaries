@@ -30,6 +30,7 @@ to add one, by adding an arch to the `archs` attrset in `default.nix`.
 | Attribute | Notes |
 |-----------|-------|
 | `x86_64` | For local testing and CI |
+| `aarch64` | 64-bit ARM |
 | `mips-sf` | Big-endian MIPS32r1, soft-float (Realtek RTL838x) |
 | `armv7l-hf` | ARMv7 hard-float (Netgear RN102) |
 

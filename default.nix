@@ -5,6 +5,9 @@ let
     x86_64 = {
       config = "x86_64-unknown-linux-musl";
     };
+    aarch64 = {
+      config = "aarch64-unknown-linux-musl";
+    };
     mips-sf = {
       config = "mips-unknown-linux-musl";
       gcc = {
@@ -70,6 +73,7 @@ let
     let
       qemuName = {
         "x86_64-unknown-linux-musl" = null;
+        "aarch64-unknown-linux-musl" = "aarch64";
         "mips-unknown-linux-musl" = "mips";
         "armv7l-unknown-linux-musleabihf" = "arm";
       }.${crossSystem.config};
