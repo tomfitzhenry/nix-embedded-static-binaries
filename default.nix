@@ -54,6 +54,7 @@ let
         curlMinimal
         dropbear
         dtach
+        (e2fsprogs.override { withFuse = false; })
         ethtool
         file
         socat
