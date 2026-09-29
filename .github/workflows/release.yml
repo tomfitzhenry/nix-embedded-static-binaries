@@ -2,7 +2,7 @@ name: Release
 
 on:
   schedule:
-    - cron: '17 3 * * 1'  # weekly on Monday
+    - cron: '17 3 1,15 * *'  # ~fortnightly (1st and 15th); was weekly Mondays
   workflow_dispatch:
 
 jobs:
