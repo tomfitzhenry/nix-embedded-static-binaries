@@ -1,0 +1,9 @@
+{
+  "version": 3,
+  "pins": {
+    "nixpkgs": {
+      "type": "Channel",
+      "name": "nixos-unstable"
+    }
+  }
+}

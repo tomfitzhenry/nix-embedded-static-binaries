@@ -1,0 +1,30 @@
+name: Update npins
+
+on:
+  schedule:
+    - cron: '0 0 1 * *'  # Monthly on the 1st
+  workflow_dispatch:
+
+jobs:
+  update-npins:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: DeterminateSystems/nix-installer-action@v14
+
+      - name: Update npins
+        run: |
+          nix shell nixpkgs#npins -c npins update
+
+      - name: Create Pull Request or Commit
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "npins: update dependencies"
+          title: "npins: update dependencies"
+          body: "Automated update of npins dependencies."
+          branch: "npins-update"
+          delete-branch: true

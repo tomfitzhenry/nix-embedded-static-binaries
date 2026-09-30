@@ -1,5 +1,6 @@
 let
-  nativePkgs = import <nixpkgs> {};
+  sources = import ./npins;
+  nativePkgs = import sources.nixpkgs {};
 
   archs = {
     x86_64 = {
@@ -21,7 +22,7 @@ let
     };
   };
 
-  mkCrossPkgs = crossSystem: import <nixpkgs> {
+  mkCrossPkgs = crossSystem: import sources.nixpkgs {
     inherit crossSystem;
     overlays = [
       (self: super: {
