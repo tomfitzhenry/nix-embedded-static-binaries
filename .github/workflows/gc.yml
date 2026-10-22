@@ -24,6 +24,7 @@ jobs:
       actions: write
       contents: read
     steps:
+      - uses: DeterminateSystems/nix-installer-action@v14
       - uses: Mic92/hestia@v3
       - name: Run garbage collection
         run: |
