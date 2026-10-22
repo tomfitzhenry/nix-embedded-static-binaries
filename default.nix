@@ -24,25 +24,24 @@ let
 
   mkCrossPkgs = crossSystem: import sources.nixpkgs {
     inherit crossSystem;
-    overlays = [
-      (self: super: {
-        # libssh2's configure.ac tests for atomics without -static,
-        # so the test misses that libatomic is unreachable under
-        # static linking on MIPS (no hardware atomics).
-        libssh2 = super.libssh2.overrideAttrs (oldAttrs:
-          let
-            oldFlags = oldAttrs.NIX_CFLAGS_LINK or oldAttrs.env.NIX_CFLAGS_LINK or "";
-          in {
-            NIX_CFLAGS_LINK = oldFlags + " -latomic";
-            env = builtins.removeAttrs (oldAttrs.env or {}) ["NIX_CFLAGS_LINK"];
-          }
-        );
-      })
-    ];
   };
 
   mkTools = name: crossSystem:
-    let pkgs = mkCrossPkgs crossSystem;
+    let
+      pkgs = mkCrossPkgs crossSystem;
+      # libssh2's configure.ac tests for atomics without -static,
+      # so the test misses that libatomic is unreachable under
+      # static linking on MIPS (no hardware atomics). Only curlMinimal
+      # needs this workaround; keep it out of the global package set so
+      # unrelated derivations retain vanilla nixpkgs hashes.
+      libssh2Patched = pkgs.pkgsStatic.libssh2.overrideAttrs (oldAttrs:
+        let
+          oldFlags = oldAttrs.NIX_CFLAGS_LINK or oldAttrs.env.NIX_CFLAGS_LINK or "";
+        in {
+          NIX_CFLAGS_LINK = oldFlags + " -latomic";
+          env = builtins.removeAttrs (oldAttrs.env or {}) ["NIX_CFLAGS_LINK"];
+        }
+      );
     in pkgs.pkgsStatic.buildEnv {
       name = "${name}-static-tools";
       paths = with pkgs.pkgsStatic; [
@@ -52,7 +51,7 @@ let
           enableAppletSymlinks = false;
           extraConfig = "CONFIG_FLASHCP y\n";
         })
-        curlMinimal
+        (curlMinimal.override { libssh2 = libssh2Patched; })
         dropbear
         dtach
         (e2fsprogs.override { withFuse = false; })
